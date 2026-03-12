@@ -75,3 +75,34 @@
 
 ### ✅ Day 3 Complete
 
+---
+
+## Day 4
+
+### What was built
+- ✅ src/components/gates/GateNode.jsx — SVG gate symbols for AND/OR/NOT/NAND/NOR/XOR/XNOR, signal-reactive fill/stroke, ReactFlow handles
+- ✅ src/components/gates/InputNode.jsx — clickable toggle switch, drives inputStates in gateStore
+- ✅ src/components/gates/OutputNode.jsx — LED indicator, reads outputStates, glows green on HIGH
+- ✅ src/components/gates/SignalEdge.jsx — custom animated edge: colour-coded (green/red/grey), pulse dot travels on signal change, delete button on hover
+- ✅ src/components/gates/GatePalette.jsx — draggable left sidebar with all 6 gate types + INPUT/OUTPUT tiles + Tidy/Clear buttons
+- ✅ src/data/presets.js — 4 preset circuits: NOT, AND, Half Adder, NAND-as-NOT
+- ✅ src/pages/Sandbox.jsx — full ReactFlow canvas with drop handler, onConnect, propagation useEffect, truth table panel, preset picker, Share URL, Bridge CTA
+- ✅ src/index.css — ReactFlow dark mode overrides
+
+### What is working
+- Drag any gate/IO tile from palette → drops onto canvas at cursor position
+- Connect handles → SignalEdge created, coloured grey (no signal yet)
+- Click INPUT node → toggles 0↔1 → propagateSignals() runs → all downstream edges + OutputNode update colour
+- Signal change → pulse dot animates along edge wire
+- Bridge CTA badge appears when canvas contains XOR + AND + 2 inputs (Half Adder pattern)
+- Truth table panel: auto-generates all 2^n rows from current circuit
+- "Load Demo" → Half Adder preset drops in fully wired and ready to toggle
+- "Tidy Layout" → nodes re-arranged left-to-right by type
+- "Share" → circuit serialised to URL param, copied to clipboard
+
+### Known issues / watch for
+- onNodesChange uses require() inline — refactor to static import on Day 5 polish pass
+- Truth table only works with nodes typed exactly 'inputNode'/'outputNode' — custom label nodes may not appear
+
+
+### ✅ Day 4 Complete

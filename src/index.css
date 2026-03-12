@@ -104,6 +104,22 @@
 
 /* ─── ReactFlow overrides ──────────────────────────────────────── */
 .react-flow__background { background: #0F172A !important; }
-.react-flow__controls   { background: #1E293B !important; border: 1px solid #334155 !important; }
-.react-flow__controls button { background: #1E293B !important; color: #94A3B8 !important; border-bottom: 1px solid #334155 !important; }
-.react-flow__controls button:hover { background: #334155 !important; }
+.react-flow__controls   {
+  background: #1E293B !important;
+  border: 1px solid #334155 !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+.react-flow__controls button {
+  background: #1E293B !important;
+  color: #94A3B8 !important;
+  border-bottom: 1px solid #334155 !important;
+  fill: #94A3B8 !important;
+}
+.react-flow__controls button:hover  { background: #334155 !important; }
+.react-flow__controls button svg    { fill: #94A3B8 !important; }
+.react-flow__minimap                { border-radius: 8px !important; overflow: hidden; }
+.react-flow__edge-path              { stroke-linecap: round; }
+.react-flow__handle                 { border-radius: 50% !important; }
+.react-flow__node                   { border: none !important; box-shadow: none !important; background: transparent !important; }
+.react-flow__node.selected .react-flow__node-default { outline: 2px solid #60A5FA; }
