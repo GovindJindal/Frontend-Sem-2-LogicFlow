@@ -56,3 +56,22 @@
 
 ### ✅ Day 2 Complete
 
+## Day 3
+
+### What was built
+- ✅ src/components/shared/ControlSlider.jsx — reusable slider (replaces inline version in DiodeLab)
+- ✅ src/components/diode/ZenerVIGraph.jsx — V-I curve with breakdown region shading, live Vz marker, BREAKDOWN badge
+- ✅ src/components/diode/ZenerMultimeter.jsx — 4-panel instrument (Voltage, Current, Power, Vz) from zenerStore
+- ✅ src/components/diode/ZenerCircuit.jsx — SVG Zener regulator with bent-cathode symbol + animated current dots
+- ✅ src/pages/ZenerLab.jsx — full page with What-If mode, AnimatePresence Vz/Temp sliders, comparison table, quick-preset buttons
+- ✅ src/components/ui/Nav.jsx — Experiments dropdown with PN Diode + Zener Diode, closes on outside click
+
+### What is working
+- Voltage drag into breakdown region → BREAKDOWN badge pulses on graph, rose wire colours, ObservationCard animates
+- What-If Mode toggle → violet banner, Vz slider + Temp slider slide in/out with AnimatePresence
+- Vz slider → ReferenceLine on ZenerVIGraph moves in real time, entire curve regenerates
+- Quick-preset buttons: "At Vz", "0 V", "+0.7V" — instant navigation to interesting operating points
+- Nav dropdown: both experiments listed with Exp 01 / Exp 02 badges, closes on click-outside
+
+### ✅ Day 3 Complete
+

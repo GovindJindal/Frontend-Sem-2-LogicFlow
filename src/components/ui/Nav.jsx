@@ -1,19 +1,81 @@
 import { Link, useLocation } from 'react-router-dom'
-import { Cpu, FlaskConical, GitFork, BookOpen, Menu, X } from 'lucide-react'
-import { useState } from 'react'
+import { Cpu, FlaskConical, GitFork, BookOpen, Menu, X, ChevronDown, Zap } from 'lucide-react'
+import { useState, useRef, useEffect } from 'react'
 import { cn } from '../../utils/cn'
 
-const links = [
-  { to: '/lab/diode',    label: 'Diode Lab',   icon: FlaskConical },
-  { to: '/sandbox',      label: 'Logic Gates', icon: GitFork },
-  { to: '/coa',          label: 'COA',         icon: Cpu },
-  { to: '/curriculum',   label: 'Curriculum',  icon: BookOpen },
+// ─── Lab dropdown sub-items ───────────────────────────────────────
+const labItems = [
+  { to: '/lab/diode', label: 'PN Junction Diode', badge: 'Exp 01', color: 'text-primary-400' },
+  { to: '/lab/zener', label: 'Zener Diode',        badge: 'Exp 02', color: 'text-rose-400'    },
 ]
+
+const topLinks = [
+  { to: '/sandbox',    label: 'Logic Gates', icon: GitFork  },
+  { to: '/coa',        label: 'COA',         icon: Cpu      },
+  { to: '/curriculum', label: 'Curriculum',  icon: BookOpen },
+]
+
+// ─── Lab dropdown ────────────────────────────────────────────────
+function LabDropdown({ pathname }) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef(null)
+  const isActive = pathname.startsWith('/lab')
+
+  // Close on outside click
+  useEffect(() => {
+    const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false) }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOpen((o) => !o)}
+        className={cn(
+          'flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all',
+          isActive
+            ? 'bg-primary-600/20 text-primary-300 border border-primary-600/30'
+            : 'text-surface-300 hover:text-white hover:bg-surface-800'
+        )}
+      >
+        <FlaskConical size={15} />
+        Experiments
+        <ChevronDown size={13} className={cn('transition-transform', open && 'rotate-180')} />
+      </button>
+
+      {open && (
+        <div className="absolute top-full left-0 mt-2 w-56 bg-surface-800 border border-surface-700
+                        rounded-xl shadow-panel overflow-hidden z-50">
+          <div className="px-3 pt-3 pb-1">
+            <p className="text-xs font-mono text-surface-500 uppercase tracking-widest">Digital Electronics</p>
+          </div>
+          {labItems.map(({ to, label, badge, color }) => (
+            <Link
+              key={to}
+              to={to}
+              onClick={() => setOpen(false)}
+              className={cn(
+                'flex items-center justify-between px-3 py-2.5 text-sm transition-colors hover:bg-surface-700',
+                pathname === to ? 'text-white bg-surface-700/60' : 'text-surface-300'
+              )}
+            >
+              <span>{label}</span>
+              <span className={cn('text-xs font-mono', color)}>{badge}</span>
+            </Link>
+          ))}
+          <div className="px-3 py-2 border-t border-surface-700">
+            <p className="text-xs text-surface-600 font-mono">More experiments coming soon…</p>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
 
 export default function Nav() {
   const { pathname } = useLocation()
-  const [open, setOpen] = useState(false)
-
+  const [mobileOpen, setMobileOpen] = useState(false)
   const isHome = pathname === '/'
 
   return (
@@ -38,7 +100,8 @@ export default function Nav() {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-1">
-          {links.map(({ to, label, icon: Icon }) => (
+          <LabDropdown pathname={pathname} />
+          {topLinks.map(({ to, label, icon: Icon }) => (
             <Link
               key={to}
               to={to}
@@ -55,30 +118,39 @@ export default function Nav() {
           ))}
         </nav>
 
-        {/* CTA + Mobile toggle */}
+        {/* CTA + mobile toggle */}
         <div className="flex items-center gap-3">
           <Link to="/quick-lab/half-adder" className="hidden md:block btn-secondary text-sm py-2">
             Quick Lab
           </Link>
           <button
             className="md:hidden text-surface-300 hover:text-white p-2"
-            onClick={() => setOpen(!open)}
+            onClick={() => setMobileOpen(!mobileOpen)}
           >
-            {open ? <X size={20} /> : <Menu size={20} />}
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
 
       {/* Mobile menu */}
-      {open && (
+      {mobileOpen && (
         <div className="md:hidden bg-surface-900/95 backdrop-blur-md border-b border-surface-700 px-4 pb-4">
-          {links.map(({ to, label, icon: Icon }) => (
-            <Link
-              key={to}
-              to={to}
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-3 py-3 text-surface-200 hover:text-white border-b border-surface-800 last:border-0"
-            >
+          <p className="text-xs font-mono text-surface-600 pt-3 pb-1 uppercase tracking-widest">Experiments</p>
+          {labItems.map(({ to, label, badge, color }) => (
+            <Link key={to} to={to} onClick={() => setMobileOpen(false)}
+              className="flex items-center justify-between py-2.5 text-surface-200 hover:text-white
+                         border-b border-surface-800">
+              <div className="flex items-center gap-3">
+                <FlaskConical size={15} className="text-primary-400" />
+                {label}
+              </div>
+              <span className={cn('text-xs font-mono', color)}>{badge}</span>
+            </Link>
+          ))}
+          {topLinks.map(({ to, label, icon: Icon }) => (
+            <Link key={to} to={to} onClick={() => setMobileOpen(false)}
+              className="flex items-center gap-3 py-3 text-surface-200 hover:text-white
+                         border-b border-surface-800 last:border-0">
               <Icon size={16} className="text-primary-400" />
               {label}
             </Link>
