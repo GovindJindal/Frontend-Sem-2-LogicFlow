@@ -125,3 +125,23 @@
 - COA dropdown in Nav covers all three routes
 
 ### ✅ Day 5 Complete
+
+---
+
+## Day 6
+
+### What was built
+- ✅ src/components/shared/LabReportExporter.jsx — jsPDF + html2canvas PDF generator: A4 layout, college header band, student info grid, apparatus table, theory section, observation table, graph screenshot, conclusion, sign-off boxes, page numbering, footer on all pages
+- ✅ src/pages/Curriculum.jsx — full course mapping page: university selector (AKTU/VTU/Anna/Mumbai), experiments by module, paper code + sem + topic + CO per uni, lab record completeness tracker per experiment
+- ✅ src/pages/CoaPipeline.jsx — Bridge Feature panel: appears on Execute stage, SVG Half Adder → 8-bit ALU → Execute diagram, links to Quick Lab and Sandbox
+- ✅ src/pages/DiodeLab.jsx — wired LabReportExporter with graphRef on VIGraph panel, pre-filled aim/apparatus/theory/observations/conclusion
+- ✅ src/pages/ZenerLab.jsx — same PDF export wiring with Zener-specific content and dynamic Vz value in text
+
+### What is working
+- Click "Export Lab Report" in DiodeLab → generates and downloads LogicFlow_Exp01_LabReport.pdf
+- Graph screenshot captured via html2canvas from the live Recharts panel
+- Curriculum page university switcher → paper codes and topic names update per university
+- Bridge Feature: appears when pipeline hits Execute stage, SVG diagram shows XOR+AND → ALU → pipeline chain
+- All 6 experiments listed in Curriculum with correct module grouping
+
+### ✅ Day 6 Complete

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   ChevronLeft, ChevronRight, RotateCcw,
-  Play, Pause, Cpu, Database, Zap,
+  Play, Pause, Cpu, Database, Zap, GitMerge,
 } from 'lucide-react'
 import { useCoaStore, STAGES } from '../store/coaStore'
 
@@ -480,6 +480,113 @@ export default function CoaPipeline() {
             </div>
           </div>
         </div>
+
+        {/* ── Bridge Feature ────────────────────────────────── */}
+        <AnimatePresence>
+          {(stageName === 'Execute' || isComplete) && (
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 16 }}
+              transition={{ duration: 0.4 }}
+              className="panel p-5 border-amber-700/40 bg-amber-950/10"
+            >
+              <div className="flex items-start gap-4 flex-wrap">
+                <div className="flex items-center gap-3 flex-shrink-0">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center
+                                   bg-amber-950/40 border border-amber-700/40">
+                    <GitMerge size={18} className="text-amber-400" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-mono font-semibold text-amber-400 uppercase tracking-widest mb-0.5">
+                      ⚡ Bridge Feature
+                    </p>
+                    <p className="text-sm font-bold text-white">
+                      The Logic You Built Lives Here
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm text-surface-300 leading-relaxed mb-3">
+                    The <span className="text-amber-300 font-semibold">Execute stage</span> uses the{' '}
+                    <span className="text-emerald-300 font-semibold">Arithmetic Logic Unit (ALU)</span>.
+                    At its core, the ALU is a chain of{' '}
+                    <span className="text-primary-300 font-semibold">Half Adders</span> — the exact
+                    XOR + AND circuit you built in the Logic Sandbox.
+                    Eight of them chained together form an 8-bit adder.
+                  </p>
+
+                  {/* Mini Half Adder → ALU diagram */}
+                  <div className="bg-surface-900/80 rounded-xl border border-surface-700 p-4 mb-3">
+                    <svg viewBox="0 0 480 80" className="w-full" style={{ maxHeight: 72 }}>
+                      {/* Half Adder box */}
+                      <rect x={10} y={15} width={110} height={50} rx={6}
+                        fill="rgba(5,150,105,0.12)" stroke="#05966960" strokeWidth={1.5} />
+                      <text x={65} y={36} textAnchor="middle" fontSize={9} fontWeight={700}
+                        fill="#059669" fontFamily="JetBrains Mono">HALF ADDER</text>
+                      <text x={65} y={48} textAnchor="middle" fontSize={8} fill="#64748B" fontFamily="JetBrains Mono">XOR + AND</text>
+                      <text x={65} y={58} textAnchor="middle" fontSize={8} fill="#475569" fontFamily="JetBrains Mono">SUM + CARRY</text>
+
+                      {/* Arrow ×8 */}
+                      <text x={135} y={44} fontSize={11} fill="#F59E0B" fontFamily="JetBrains Mono">×8</text>
+                      <line x1={122} y1={40} x2={158} y2={40} stroke="#F59E0B" strokeWidth={1.5} markerEnd="url(#arr-bridge)" />
+                      <defs>
+                        <marker id="arr-bridge" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                          <path d="M0,0 L6,3 L0,6 Z" fill="#F59E0B" />
+                        </marker>
+                      </defs>
+
+                      {/* 8-bit ALU box */}
+                      <rect x={160} y={10} width={130} height={60} rx={6}
+                        fill="rgba(26,86,219,0.12)" stroke="#1A56DB60" strokeWidth={1.5} />
+                      <text x={225} y={32} textAnchor="middle" fontSize={9} fontWeight={700}
+                        fill="#1A56DB" fontFamily="JetBrains Mono">8-BIT ALU</text>
+                      <text x={225} y={44} textAnchor="middle" fontSize={8} fill="#64748B" fontFamily="JetBrains Mono">ADD / SUB / AND / OR</text>
+                      <text x={225} y={56} textAnchor="middle" fontSize={8} fill="#475569" fontFamily="JetBrains Mono">A[7:0] OP B[7:0]</text>
+
+                      {/* Arrow */}
+                      <line x1={292} y1={40} x2={328} y2={40} stroke="#7C3AED" strokeWidth={1.5} markerEnd="url(#arr-cpu)" />
+                      <defs>
+                        <marker id="arr-cpu" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                          <path d="M0,0 L6,3 L0,6 Z" fill="#7C3AED" />
+                        </marker>
+                      </defs>
+
+                      {/* CPU Execute box */}
+                      <rect x={330} y={10} width={140} height={60} rx={6}
+                        fill="rgba(124,58,237,0.12)" stroke="#7C3AED60" strokeWidth={1.5} />
+                      <text x={400} y={32} textAnchor="middle" fontSize={9} fontWeight={700}
+                        fill="#7C3AED" fontFamily="JetBrains Mono">EXECUTE STAGE</text>
+                      <text x={400} y={44} textAnchor="middle" fontSize={8} fill="#64748B" fontFamily="JetBrains Mono">IR decoded → ALU ops</text>
+                      <text x={400} y={56} textAnchor="middle" fontSize={8} fill="#475569" fontFamily="JetBrains Mono">ACC ← result</text>
+                    </svg>
+                  </div>
+
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <Link
+                      to="/quick-lab/half-adder"
+                      className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-emerald-700/40
+                                 bg-emerald-950/20 text-emerald-300 text-xs font-mono hover:bg-emerald-950/40 transition-all"
+                    >
+                      <GitMerge size={12} /> Revisit Half Adder
+                    </Link>
+                    <Link
+                      to="/sandbox"
+                      className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-primary-700/40
+                                 bg-primary-950/20 text-primary-300 text-xs font-mono hover:bg-primary-950/40 transition-all"
+                    >
+                      Build More Gates <ChevronRight size={12} />
+                    </Link>
+                    <p className="text-xs text-surface-500 font-mono">
+                      This connection — gates → ALU → pipeline — is what LogicFlow is built to show.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
       </div>
     </div>
