@@ -106,3 +106,22 @@
 
 
 ### ✅ Day 4 Complete
+
+---
+
+## Day 5
+
+### What was built
+- ✅ src/pages/CoaOverview.jsx — full COA module landing page: hero, 4 concept cards, 2 experiment cards, Von Neumann architecture SVG diagram, Bridge callout
+- ✅ src/pages/CoaPipeline.jsx — interactive pipeline stepper: 4 animated stage boxes, pulsing active stage, auto-play with configurable speed, register bank panel, program listing with active row indicator, stage detail text, CSV-ready
+- ✅ src/pages/CoaRegisters.jsx — bit-level register visualizer: 5 register cards with 8-bit tile grid, hex/dec/bin display, animated bit highlights on change, flag register, change history log
+- ✅ src/components/ui/Nav.jsx — added COA dropdown (Overview + Pipeline + Registers) with same pattern as Experiments dropdown
+
+### What is working
+- CoaOverview: concept cards + experiment cards link to /coa/pipeline and /coa/registers
+- CoaPipeline: "Next Stage" button steps through all 4 stages × 5 instructions = 20 cycles; register values animate on change; "Auto-play" button cycles at 1.2s per stage
+- CoaRegisters: bit tiles flash amber on update; "updated" badge appears briefly; change log shows all reg mutations with from/to hex values
+- Both pipeline pages share coaStore state — navigating between them preserves position
+- COA dropdown in Nav covers all three routes
+
+### ✅ Day 5 Complete
