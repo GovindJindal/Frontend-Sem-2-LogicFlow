@@ -23,14 +23,36 @@
 ### What is broken / TODO
 - None known. App shell is clean.
 
-### Start Day 2 with
-- src/utils/diodePhysics.js — test generateDiodeCurve() in the browser console
-- Build src/store/diodeStore.js (verify setVoltage works)
-- Build src/components/diode/VIGraph.jsx (Recharts LineChart connected to diodeStore)
-- Build src/components/diode/Multimeter.jsx
-- Wire them all into src/pages/DiodeLab.jsx
-
 ### Notes
 - All physics math is ready in diodePhysics.js — do not rewrite on Day 2, just import and use.
 - The Shockley equation at large forward voltages produces very large numbers — generateDiodeCurve
   already clamps to ±100mA. Check this is visible in the graph range on Day 2.
+
+### ✅ Day 1 Complete
+
+---
+
+## Day 2
+
+### What was built
+- ✅ src/components/diode/BiasToggle.jsx — forward/reverse mode switcher, resets voltage on switch
+- ✅ src/components/diode/Multimeter.jsx — three-panel instrument (Voltage, Current, Temp) with auto-unit formatting (mA/µA/nA)
+- ✅ src/components/diode/VIGraph.jsx — Recharts LineChart with live Q-point tracker, reference lines, knee voltage marker, equation annotations
+- ✅ src/components/diode/DiodeCircuit.jsx — SVG schematic with animated current-flow dots (SVG animateMotion)
+- ✅ src/pages/DiodeLab.jsx — full 2-column layout wiring all 4 components + dynamic ObservationCard + Shockley equation reference
+
+### What is working
+- Voltage slider → diodePhysics.js → VIGraph re-renders (live curve)
+- Voltage slider → Multimeter reads update in real time
+- BiasToggle switches mode → graph domain flips, slider range resets to 0
+- Temperature slider → full curve regenerates (useMemo on temperature)
+- DiodeCircuit SVG dots animate when voltage > 0.6V (conducting state)
+- ObservationCard text updates dynamically with voltage/mode
+
+### Known issues / watch for
+- VIGraph Q-point is shown via two ReferenceLine crosshairs — not a true dot on the curve.
+  On Day 5 polish pass, consider finding the nearest curveData point and rendering a custom dot.
+- DiodeCircuit SVG animateMotion may not work in all browsers without a polyfill (Chrome/Firefox OK).
+
+### ✅ Day 2 Complete
+
