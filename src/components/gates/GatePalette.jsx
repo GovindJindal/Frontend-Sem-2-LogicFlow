@@ -9,6 +9,7 @@ const GATE_TYPES = [
   { type: 'NAND', color: '#B45309', desc: 'NOT AND — universal gate' },
   { type: 'NOR',  color: '#9F1239', desc: 'NOT OR — universal gate' },
   { type: 'XOR',  color: '#0E7490', desc: 'HIGH when inputs DIFFER' },
+  { type: 'XNOR', color: '#7C3AED', desc: 'HIGH when inputs are EQUAL' },
 ]
 
 const IO_TYPES = [

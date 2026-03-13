@@ -1,7 +1,7 @@
 import { useMemo, useRef } from 'react'
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid,
-  Tooltip, ReferenceLine, ResponsiveContainer, Label
+  Tooltip, ReferenceLine, ReferenceDot, ResponsiveContainer, Label
 } from 'recharts'
 import { useDiodeStore } from '../../store/diodeStore'
 import { generateDiodeCurve, diodeCurrent, formatCurrent } from '../../utils/diodePhysics'
@@ -133,20 +133,15 @@ export default function VIGraph() {
               isAnimationActive={false}
             />
 
-            {/* Operating point dot — rendered as a custom dot on the nearest point */}
-            <ReferenceLine
+            {/* Operating point dot — amber circle on the curve */}
+            <ReferenceDot
               x={parseFloat(voltage.toFixed(2))}
-              stroke="#F59E0B"
-              strokeWidth={1}
-              strokeDasharray="3 3"
-              label={{ value: `${voltage.toFixed(2)}V`, position: 'top',
-                style: { fill: '#F59E0B', fontSize: 9, fontFamily: 'JetBrains Mono' } }}
-            />
-            <ReferenceLine
               y={parseFloat(currentMa.toFixed(2))}
-              stroke="#F59E0B"
-              strokeWidth={1}
-              strokeDasharray="3 3"
+              r={6}
+              fill="#F59E0B"
+              stroke="#0F172A"
+              strokeWidth={2}
+              isFront
             />
           </LineChart>
         </ResponsiveContainer>

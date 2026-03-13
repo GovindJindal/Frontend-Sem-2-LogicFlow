@@ -11,40 +11,7 @@ import Multimeter         from '../components/diode/Multimeter'
 import VIGraph            from '../components/diode/VIGraph'
 import DiodeCircuit       from '../components/diode/DiodeCircuit'
 import LabReportExporter  from '../components/shared/LabReportExporter'
-
-// ─── Reusable slider ────────────────────────────────────────────
-function ControlSlider({ label, value, min, max, step, onChange, unit, color = 'blue', formatVal }) {
-  const pct = ((value - min) / (max - min)) * 100
-  const trackColor = color === 'amber' ? '#F59E0B' : color === 'rose' ? '#F43F5E' : '#1A56DB'
-  return (
-    <div className="flex flex-col gap-2">
-      {label && (
-        <div className="flex items-center justify-between">
-          <label className="text-xs font-semibold text-surface-400 uppercase tracking-widest">{label}</label>
-          <span className="font-mono text-sm font-bold text-surface-200">
-            {formatVal ? formatVal(value) : value}{unit}
-          </span>
-        </div>
-      )}
-      {!label && (
-        <div className="flex justify-end">
-          <span className="font-mono text-sm font-bold text-surface-200">
-            {formatVal ? formatVal(value) : value}{unit}
-          </span>
-        </div>
-      )}
-      <input
-        type="range" min={min} max={max} step={step} value={value}
-        onChange={(e) => onChange(parseFloat(e.target.value))}
-        className="w-full h-2 rounded-full appearance-none cursor-pointer"
-        style={{ background: `linear-gradient(to right, ${trackColor} ${pct}%, #334155 ${pct}%)` }}
-      />
-      <div className="flex justify-between text-xs font-mono text-surface-600">
-        <span>{min}{unit}</span><span>{max}{unit}</span>
-      </div>
-    </div>
-  )
-}
+import ControlSlider      from '../components/shared/ControlSlider'
 
 // ─── Dynamic observation card ────────────────────────────────────
 function ObservationCard({ voltage, biasMode }) {
