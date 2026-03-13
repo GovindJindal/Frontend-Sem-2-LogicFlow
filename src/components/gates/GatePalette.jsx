@@ -120,7 +120,7 @@ export default function GatePalette({ onTidy }) {
         </p>
         <div className="flex flex-col gap-1.5">
           {GATE_TYPES.map((g) => (
-            <GateTile key={g.type} {...g} onDragStart={onDragStart} />
+            <GateTile key={g.type} gateType={g.type} color={g.color} desc={g.desc} onDragStart={onDragStart} />
           ))}
         </div>
       </div>
