@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
   Cpu, Zap, GitFork, FlaskConical, ArrowRight,
-  ChevronRight, BookOpen, BarChart2, Download
+  ChevronRight, BookOpen, BarChart2, Download,
+  GraduationCap,
 } from 'lucide-react'
 
 // ─── Animation variants ─────────────────────────────────────────
@@ -23,7 +24,7 @@ const modules = [
     color: 'blue',
     href: '/lab/diode',
     accent: '#1A56DB',
-    items: ['PN Junction Diode', 'Zener Breakdown', 'V-I Curve (Live)', 'Virtual Multimeter'],
+    items: ['PN Junction Diode', 'Zener Breakdown', 'V-I Curve (Live)', 'PDF Lab Report'],
   },
   {
     icon: GitFork,
@@ -34,35 +35,41 @@ const modules = [
     color: 'green',
     href: '/sandbox',
     accent: '#059669',
-    items: ['AND / OR / NOT / NAND / NOR', 'Signal Propagation Animation', 'Auto Truth Table', 'Snapshot & Share'],
+    items: ['AND / OR / NOT / NAND / NOR / XOR', 'Signal Propagation Animation', 'Auto Truth Table', 'Snapshot & Share URL'],
   },
   {
     icon: Cpu,
     badge: 'Computer Architecture',
     badgeClass: 'badge-amber',
     title: 'COA Visualizer',
-    desc: 'Step through the Fetch-Decode-Execute cycle and watch registers flip bits in real time. Endianness toggle, flag register, and pipeline annotations.',
+    desc: 'Step through the Fetch-Decode-Execute cycle and watch registers flip bits in real time. See how the Half Adder you built lives inside the ALU.',
     color: 'amber',
     href: '/coa',
     accent: '#D97706',
-    items: ['Pipeline Stepper', '8-bit Registers', 'Flag Register', 'Endianness Toggle'],
+    items: ['Pipeline Stepper', '8-bit Register Bank', 'Flag Register', 'Bridge: Gates → ALU'],
   },
 ]
 
 const stats = [
   { value: '3',   label: 'Interactive Modules' },
-  { value: '5+',  label: 'Core Experiments' },
+  { value: '6',   label: 'Core Experiments' },
+  { value: '4',   label: 'Universities Mapped' },
   { value: '0',   label: 'Setup Required' },
-  { value: '∞',   label: 'Attempts, No Hardware Needed' },
 ]
 
 const differentiators = [
-  { icon: Zap,      title: 'Signal Propagation',  desc: 'Watch electrical signals travel through gates in real time — not just 0 and 1.' },
-  { icon: Cpu,      title: 'Bridge to CPU',        desc: 'Build a Half Adder in the sandbox, then see it live inside a CPU\'s ALU.' },
-  { icon: BarChart2,title: 'Live V-I Curves',      desc: 'Every slider movement redraws the characteristic curve. Physics, not just animation.' },
-  { icon: Download, title: 'Lab Report Export',    desc: 'Generate a formatted PDF lab report from your session. Submit directly.' },
-  { icon: BookOpen, title: 'Curriculum Aligned',   desc: 'Experiments mapped to AKTU, VTU, and Anna University lab syllabi.' },
-  { icon: GitFork,  title: 'Guided Quick Labs',    desc: '15-minute step-by-step modules for when you have limited lab time.' },
+  { icon: Zap,          title: 'Signal Propagation',  desc: 'Watch electrical signals travel through gates in real time — not just 0 and 1.' },
+  { icon: Cpu,          title: 'Bridge to CPU',        desc: 'Build a Half Adder in the sandbox, then see it live inside the CPU\'s ALU execute stage.' },
+  { icon: BarChart2,    title: 'Live V-I Curves',      desc: 'Every slider movement redraws the characteristic curve using the real Shockley equation.' },
+  { icon: Download,     title: 'Lab Report Export',    desc: 'Generate a formatted PDF lab report from your session with graph, table, and sign-off. Submit directly.' },
+  { icon: GraduationCap,title: 'Curriculum Aligned',  desc: 'All 6 experiments mapped to AKTU, VTU, Anna University, and Mumbai University syllabi.' },
+  { icon: GitFork,      title: 'Guided Quick Labs',    desc: '15-minute step-by-step modules with hints, checks, and theory panels built in.' },
+]
+
+const quickLabs = [
+  { id: 'not-gate',       title: 'NOT Gate',        subtitle: 'Signal Inversion',   color: '#7C3AED', time: '5 min'  },
+  { id: 'half-adder',     title: 'Half Adder',      subtitle: '1-bit Binary Adder', color: '#059669', time: '10 min' },
+  { id: 'nand-universal', title: 'NAND Universal',  subtitle: 'Universal Gate Proof',color: '#B45309', time: '8 min'  },
 ]
 
 // ─── Floating circuit node decoration ───────────────────────────
@@ -74,6 +81,46 @@ function CircuitDot({ x, y, delay = 0 }) {
       animate={{ opacity: [0.2, 0.8, 0.2], scale: [1, 1.4, 1] }}
       transition={{ duration: 3, delay, repeat: Infinity, ease: 'easeInOut' }}
     />
+  )
+}
+
+// ─── Module card ─────────────────────────────────────────────────
+function ModuleCard({ mod }) {
+  const Icon = mod.icon
+  return (
+    <motion.div variants={fadeUp}>
+      <Link to={mod.href} className="group block h-full">
+        <div className="panel h-full p-6 hover:border-surface-500 transition-all duration-300
+                        hover:-translate-y-1 hover:shadow-panel flex flex-col">
+          {/* Header */}
+          <div className="flex items-start justify-between mb-5">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center"
+                style={{ background: mod.accent + '20', border: `1px solid ${mod.accent}40` }}>
+                <Icon size={18} style={{ color: mod.accent }} />
+              </div>
+              <span className={`badge ${mod.badgeClass} text-xs`}>{mod.badge}</span>
+            </div>
+            <ArrowRight size={16} className="text-surface-600 group-hover:text-surface-300
+                                             group-hover:translate-x-1 transition-all" />
+          </div>
+
+          {/* Title + desc */}
+          <h3 className="font-display font-bold text-xl text-white mb-2 group-hover:text-primary-300
+                         transition-colors">{mod.title}</h3>
+          <p className="text-surface-400 text-sm leading-relaxed mb-5 flex-1">{mod.desc}</p>
+
+          {/* Feature list */}
+          <ul className="space-y-1.5 border-t border-surface-700 pt-4">
+            {mod.items.map((item) => (
+              <li key={item} className="flex items-center gap-2 text-xs text-surface-500 font-mono">
+                <span style={{ color: mod.accent }}>→</span> {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Link>
+    </motion.div>
   )
 }
 
@@ -179,117 +226,117 @@ export default function Landing() {
       {/* ── MODULES ────────────────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-24">
         <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          className="text-center mb-14"
+          initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }} transition={{ duration: 0.5 }}
         >
-          <h2 className="font-display font-bold text-4xl text-white mb-4">Three Modules. One Platform.</h2>
-          <p className="text-surface-400 text-lg max-w-xl mx-auto">
-            From individual diode curves to full CPU pipeline — all in one browser tab.
+          <p className="text-xs font-mono text-primary-400 uppercase tracking-widest mb-3">What's inside</p>
+          <h2 className="font-display font-bold text-4xl text-white mb-4">Three modules. One platform.</h2>
+          <p className="text-surface-400 max-w-xl mx-auto">
+            Each module covers a full chapter of your curriculum — with interactive experiments,
+            real physics, and a PDF you can submit as a lab record.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {modules.map((mod, i) => (
-            <motion.div
-              key={mod.title}
-              initial={{ opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.15 }}
-            >
-              <Link
-                to={mod.href}
-                className="group block h-full panel p-6 hover:border-primary-600/50
-                           transition-all duration-300 hover:-translate-y-1 hover:shadow-panel"
-              >
-                {/* Icon + badge */}
-                <div className="flex items-start justify-between mb-5">
-                  <div
-                    className="w-12 h-12 rounded-xl flex items-center justify-center"
-                    style={{ background: `${mod.accent}20`, border: `1px solid ${mod.accent}40` }}
-                  >
-                    <mod.icon size={22} style={{ color: mod.accent }} />
-                  </div>
-                  <span className={`badge ${mod.badgeClass} text-xs`}>{mod.badge}</span>
-                </div>
-
-                {/* Title + desc */}
-                <h3 className="font-display font-bold text-xl text-white mb-3 group-hover:text-primary-300 transition-colors">
-                  {mod.title}
-                </h3>
-                <p className="text-surface-400 text-sm leading-relaxed mb-5">{mod.desc}</p>
-
-                {/* Feature list */}
-                <ul className="space-y-2">
-                  {mod.items.map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-sm text-surface-300">
-                      <span className="w-1 h-1 rounded-full bg-primary-400 flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-
-                {/* CTA */}
-                <div className="flex items-center gap-1.5 mt-6 text-primary-400 text-sm font-medium
-                                group-hover:gap-3 transition-all">
-                  Open Module <ArrowRight size={14} />
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          variants={stagger}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+        >
+          {modules.map((mod) => <ModuleCard key={mod.title} mod={mod} />)}
+        </motion.div>
       </section>
 
-      {/* ── DIFFERENTIATORS ────────────────────────────────────── */}
-      <section className="bg-surface-800/30 border-t border-surface-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-24">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <p className="text-primary-400 font-mono text-sm mb-3 tracking-widest uppercase">
-              Why LogicFlow
-            </p>
-            <h2 className="font-display font-bold text-4xl text-white mb-4">
-              Not a textbook. A workbench.
-            </h2>
-            <p className="text-surface-400 text-lg max-w-xl mx-auto">
-              Every feature was built around one question:
-              what do students actually need in a 2-hour lab session?
-            </p>
-          </motion.div>
+      {/* ── QUICK LABS STRIP ───────────────────────────────────── */}
+      <section className="border-y border-surface-700 bg-surface-800/30 py-14 px-4">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex items-end justify-between mb-8 flex-wrap gap-4">
+            <div>
+              <p className="text-xs font-mono text-primary-400 uppercase tracking-widest mb-2">Guided experiments</p>
+              <h2 className="font-display font-bold text-3xl text-white">Quick Labs</h2>
+              <p className="text-surface-400 text-sm mt-1">Structured walkthroughs with auto-verification. Perfect before exams.</p>
+            </div>
+            <Link to="/sandbox"
+              className="flex items-center gap-2 text-sm font-mono text-surface-400 hover:text-primary-400 transition-colors">
+              Open Free Sandbox <ChevronRight size={14} />
+            </Link>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {differentiators.map((d, i) => (
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {quickLabs.map((lab, i) => (
               <motion.div
-                key={d.title}
-                className="panel p-5 flex gap-4"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.5 }}
+                key={lab.id}
+                initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ delay: i * 0.1 }}
               >
-                <div className="w-10 h-10 rounded-lg bg-primary-600/15 border border-primary-600/30
-                                flex items-center justify-center flex-shrink-0">
-                  <d.icon size={18} className="text-primary-400" />
-                </div>
-                <div>
-                  <p className="font-semibold text-white text-sm mb-1">{d.title}</p>
-                  <p className="text-surface-400 text-sm leading-relaxed">{d.desc}</p>
-                </div>
+                <Link to={`/quick-lab/${lab.id}`}
+                  className="group flex flex-col gap-3 p-5 panel hover:border-surface-500
+                             hover:-translate-y-0.5 transition-all">
+                  <div className="flex items-center justify-between">
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center font-mono text-xs font-bold"
+                      style={{ background: lab.color + '20', color: lab.color, border: `1px solid ${lab.color}40` }}>
+                      {String(i + 1).padStart(2, '0')}
+                    </div>
+                    <span className="text-[10px] font-mono text-surface-600 bg-surface-800 px-2 py-0.5 rounded-full border border-surface-700">
+                      {lab.time}
+                    </span>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-white text-sm group-hover:text-primary-300 transition-colors">
+                      {lab.title}
+                    </p>
+                    <p className="text-xs text-surface-500 mt-0.5">{lab.subtitle}</p>
+                  </div>
+                  <div className="flex items-center gap-1 text-xs font-mono mt-auto"
+                    style={{ color: lab.color }}>
+                    Start <ArrowRight size={11} />
+                  </div>
+                </Link>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* ── DIFFERENTIATORS ────────────────────────────────────── */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-24">
+        <motion.div
+          className="text-center mb-14"
+          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+        >
+          <p className="text-xs font-mono text-primary-400 uppercase tracking-widest mb-3">Why LogicFlow</p>
+          <h2 className="font-display font-bold text-4xl text-white">Built different.</h2>
+        </motion.div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {differentiators.map((d, i) => {
+            const Icon = d.icon
+            return (
+              <motion.div
+                key={d.title}
+                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ delay: i * 0.07 }}
+                className="panel p-5 flex gap-4"
+              >
+                <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0
+                                bg-primary-600/15 border border-primary-600/25">
+                  <Icon size={16} className="text-primary-400" />
+                </div>
+                <div>
+                  <p className="font-semibold text-white text-sm mb-1">{d.title}</p>
+                  <p className="text-surface-400 text-sm leading-relaxed">{d.desc}</p>
+                </div>
+              </motion.div>
+            )
+          })}
+        </div>
+      </section>
+
       {/* ── BRIDGE FEATURE CALLOUT ─────────────────────────────── */}
-      <section className="max-w-4xl mx-auto px-4 py-24 text-center">
+      <section className="max-w-4xl mx-auto px-4 pb-16">
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -313,24 +360,64 @@ export default function Landing() {
             </h2>
             <p className="text-surface-300 text-base leading-relaxed max-w-2xl mx-auto mb-8">
               LogicFlow is the only simulator that lets you build a Half Adder in the Logic Sandbox
-              and then click <em>"See This in a CPU"</em> to watch it highlighted inside the ALU.
+              and then watch it highlighted inside the ALU during the CPU's Execute stage.
               Digital Electronics and Computer Architecture are the same subject — we show you why.
             </p>
-            <Link to="/sandbox" className="btn-primary inline-flex items-center gap-2">
-              Try the Bridge Feature
-              <ArrowRight size={16} />
-            </Link>
+            <div className="flex gap-4 justify-center flex-wrap">
+              <Link to="/sandbox" className="btn-primary inline-flex items-center gap-2">
+                Try the Bridge Feature
+                <ArrowRight size={16} />
+              </Link>
+              <Link to="/coa/pipeline" className="btn-secondary inline-flex items-center gap-2">
+                See the Pipeline
+                <ChevronRight size={16} />
+              </Link>
+            </div>
           </div>
         </motion.div>
       </section>
 
+      {/* ── CURRICULUM CTA ─────────────────────────────────────── */}
+      <section className="max-w-4xl mx-auto px-4 pb-20">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex items-center justify-between gap-6 panel p-6 border-amber-700/30 bg-amber-950/10 flex-wrap"
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-amber-950/40 border border-amber-700/40">
+              <GraduationCap size={18} className="text-amber-400" />
+            </div>
+            <div>
+              <p className="font-semibold text-white mb-0.5">Mapped to your syllabus</p>
+              <p className="text-sm text-surface-400">
+                AKTU · VTU · Anna University · Mumbai University — see the exact paper code and CO for each experiment.
+              </p>
+            </div>
+          </div>
+          <Link to="/curriculum"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-amber-600/40
+                       bg-amber-950/30 text-amber-300 text-sm font-mono hover:bg-amber-950/50 transition-all flex-shrink-0">
+            View Curriculum <ChevronRight size={14} />
+          </Link>
+        </motion.div>
+      </section>
+
       {/* ── FOOTER ─────────────────────────────────────────────── */}
-      <footer className="border-t border-surface-700 py-8 px-4 text-center text-surface-500 text-sm">
-        <p className="mb-1">
-          <span className="font-display font-semibold text-surface-300">LogicFlow</span>
-          {' '}— Virtual Electronics Lab
-        </p>
-        <p>Built for engineering students. Semester 2 Frontend Project.</p>
+      <footer className="border-t border-surface-700 py-10 px-4">
+        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="text-center sm:text-left">
+            <p className="font-display font-semibold text-surface-300 mb-0.5">LogicFlow</p>
+            <p className="text-surface-500 text-sm">Virtual Electronics & Computer Architecture Lab</p>
+          </div>
+          <div className="flex items-center gap-4 text-sm font-mono text-surface-500">
+            <Link to="/lab/diode"  className="hover:text-primary-400 transition-colors">Diode Lab</Link>
+            <Link to="/sandbox"    className="hover:text-primary-400 transition-colors">Sandbox</Link>
+            <Link to="/coa"        className="hover:text-primary-400 transition-colors">COA</Link>
+            <Link to="/curriculum" className="hover:text-primary-400 transition-colors">Curriculum</Link>
+          </div>
+          <p className="text-surface-600 text-xs font-mono">Semester 2 · Front-End Project</p>
+        </div>
       </footer>
     </div>
   )

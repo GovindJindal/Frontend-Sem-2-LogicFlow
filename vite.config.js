@@ -8,4 +8,18 @@ export default defineConfig({
       '@': '/src',
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'motion':       ['framer-motion'],
+          'reactflow':    ['reactflow'],
+          'charts':       ['recharts'],
+          'pdf':          ['jspdf', 'html2canvas'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 600,
+  },
 })

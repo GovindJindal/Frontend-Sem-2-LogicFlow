@@ -8,6 +8,7 @@ import CoaRegisters  from './pages/CoaRegisters'
 import CoaOverview   from './pages/CoaOverview'
 import QuickLab      from './pages/QuickLab'
 import Curriculum    from './pages/Curriculum'
+import NotFound      from './pages/NotFound'
 import Nav           from './components/ui/Nav'
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/coa/registers"   element={<CoaRegisters />} />
         <Route path="/quick-lab/:id"   element={<QuickLab />} />
         <Route path="/curriculum"      element={<Curriculum />} />
+        <Route path="*"                element={<NotFound />} />
       </Routes>
     </div>
   )
