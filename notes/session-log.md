@@ -146,3 +146,27 @@
 
 ### ✅ Day 6 Complete
 
+---
+
+## Day 7 — Final Polish & Deployment Prep
+
+### What was built
+- ✅ vercel.json — SPA rewrites so /coa/pipeline, /quick-lab/:id etc. don't 404 on hard refresh
+- ✅ vite.config.js — manual chunk splitting (react-vendor, motion, reactflow, charts, pdf) for fast parallel loads
+- ✅ src/pages/NotFound.jsx — 404 error page with quick nav links (glitchy 404 heading + links to Home/Diode/Sandbox/COA)
+- ✅ src/App.jsx — added wildcard route <Route path="*" element={<NotFound />} />
+- ✅ src/pages/Landing.jsx — full polish pass:
+    - Stats updated to 6 experiments / 4 universities
+    - ModuleCard component extracted with hover animations
+    - Quick Labs strip section (3 cards linking to /quick-lab/:id)
+    - Bridge Feature CTA gains second button → /coa/pipeline
+    - Curriculum CTA panel before footer
+    - Footer upgraded with nav links
+
+### Deploy to Vercel
+1. npm run build  (check for errors first)
+2. npx vercel --prod  (from logicflow/ folder)
+   OR push to GitHub → import on vercel.com → auto-deploy
+
+### ✅ Day 7 Complete — LogicFlow is DONE
+
