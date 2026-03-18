@@ -5,9 +5,12 @@ import { cn } from '../../utils/cn'
 
 // ─── Quick Lab dropdown ───────────────────────────────────────────
 const quickLabItems = [
-  { id: 'not-gate',       label: 'NOT Gate',       badge: 'A', color: '#7C3AED' },
-  { id: 'half-adder',     label: 'Half Adder',     badge: 'B', color: '#059669' },
-  { id: 'nand-universal', label: 'NAND Universal', badge: 'C', color: '#B45309' },
+  { id: 'not-gate',       label: 'NOT Gate',         badge: 'A', color: '#7C3AED' },
+  { id: 'half-adder',     label: 'Half Adder',       badge: 'B', color: '#059669' },
+  { id: 'nand-universal', label: 'NAND Universal',   badge: 'C', color: '#B45309' },
+  { id: 'full-adder',     label: 'Full Adder',       badge: 'D', color: '#0E7490' },
+  { id: 'sr-flipflop',    label: 'SR Flip-Flop',     badge: 'E', color: '#7C3AED' },
+  { id: 'mux-2to1',       label: '2:1 Multiplexer',  badge: 'F', color: '#059669' },
 ]
 
 function QuickLabMenu({ pathname }) {
@@ -59,8 +62,9 @@ function QuickLabMenu({ pathname }) {
 
 // ─── Lab dropdown sub-items ───────────────────────────────────────
 const labItems = [
-  { to: '/lab/diode', label: 'PN Junction Diode', badge: 'Exp 01', color: 'text-primary-400' },
-  { to: '/lab/zener', label: 'Zener Diode',        badge: 'Exp 02', color: 'text-rose-400'    },
+  { to: '/lab/diode',      label: 'PN Junction Diode', badge: 'Exp 01', color: 'text-primary-400' },
+  { to: '/lab/zener',      label: 'Zener Diode',       badge: 'Exp 02', color: 'text-rose-400'    },
+  { to: '/lab/rectifier',  label: 'Rectifier Circuits',badge: 'Exp 03', color: 'text-amber-400'   },
 ]
 
 const coaItems = [

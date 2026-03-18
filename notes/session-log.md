@@ -168,5 +168,31 @@
 2. npx vercel --prod  (from logicflow/ folder)
    OR push to GitHub → import on vercel.com → auto-deploy
 
-### ✅ Day 7 Complete — LogicFlow is DONE
+### ✅ Day 7 Complete
 
+---
+
+## Day 8 — New Experiments
+
+### What was built
+- ✅ src/store/rectifierStore.js — new Zustand store (circuitType, amplitude, frequency, filterEnabled, capacitance, loadResistance)
+- ✅ src/pages/RectifierLab.jsx — full interactive rectifier lab:
+    - Half-wave and full-wave bridge selector
+    - Live waveform chart (2 cycles, AC input + DC output)
+    - RC filter toggle with capacitance slider
+    - 5 metric cards (Vpeak, Vdc, ripple factor γ, PIV, output frequency)
+    - SVG circuit diagrams for both topologies (animated wires)
+    - Formula reference panel
+    - Observation card with colour-coded quality rating
+    - Full PDF export wired with all apparatus, theory, table
+- ✅ src/data/presets.js — 3 new presets: full-adder (8 gates), sr-flipflop (cross-coupled NOR), mux-2to1 (AND-OR-NOT)
+- ✅ src/data/quickLabSteps.js — 3 new guided experiments (4-5 steps each with checkFns): full-adder, sr-flipflop, mux-2to1
+- ✅ src/App.jsx — /lab/rectifier route added
+- ✅ src/components/ui/Nav.jsx — Rectifier Exp 03 added to Experiments dropdown; 3 new Quick Lab items
+- ✅ src/pages/QuickLab.jsx — sidebar list updated with all 6 experiments
+- ✅ src/pages/Curriculum.jsx — 4 new experiments mapped (Rectifier, Full Adder, SR FF, MUX)
+- [x] src/pages/Landing.jsx — stats updated (9 experiments), quickLabs strip now shows all 6, grid 2×3
+
+### Experiment count: 3 lab pages + 6 Quick Labs = 9 total
+
+### Day-8 Complete

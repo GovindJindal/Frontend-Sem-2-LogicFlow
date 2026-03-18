@@ -359,9 +359,12 @@ export default function QuickLab() {
             <p className="text-[10px] font-mono text-surface-600 uppercase tracking-widest mb-2">Other Experiments</p>
             <div className="flex flex-col gap-1">
               {[
-                { id: 'not-gate',       label: 'NOT Gate',    color: '#7C3AED' },
-                { id: 'half-adder',     label: 'Half Adder',  color: '#059669' },
-                { id: 'nand-universal', label: 'NAND Universal', color: '#B45309' },
+                { id: 'not-gate',       label: 'NOT Gate',        color: '#7C3AED' },
+                { id: 'half-adder',     label: 'Half Adder',      color: '#059669' },
+                { id: 'nand-universal', label: 'NAND Universal',   color: '#B45309' },
+                { id: 'full-adder',     label: 'Full Adder',       color: '#0E7490' },
+                { id: 'sr-flipflop',    label: 'SR Flip-Flop',     color: '#7C3AED' },
+                { id: 'mux-2to1',       label: '2:1 Multiplexer',  color: '#059669' },
               ].map((exp) => (
                 <Link
                   key={exp.id}

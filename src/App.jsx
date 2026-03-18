@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import Landing       from './pages/Landing'
 import DiodeLab      from './pages/DiodeLab'
 import ZenerLab      from './pages/ZenerLab'
+import RectifierLab  from './pages/RectifierLab'
 import Sandbox       from './pages/Sandbox'
 import CoaPipeline   from './pages/CoaPipeline'
 import CoaRegisters  from './pages/CoaRegisters'
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/"                element={<Landing />} />
         <Route path="/lab/diode"       element={<DiodeLab />} />
         <Route path="/lab/zener"       element={<ZenerLab />} />
+        <Route path="/lab/rectifier"   element={<RectifierLab />} />
         <Route path="/sandbox"         element={<Sandbox />} />
         <Route path="/coa"             element={<CoaOverview />} />
         <Route path="/coa/pipeline"    element={<CoaPipeline />} />

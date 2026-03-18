@@ -52,7 +52,7 @@ const modules = [
 
 const stats = [
   { value: '3',   label: 'Interactive Modules' },
-  { value: '6',   label: 'Core Experiments' },
+  { value: '9',   label: 'Core Experiments' },
   { value: '4',   label: 'Universities Mapped' },
   { value: '0',   label: 'Setup Required' },
 ]
@@ -67,9 +67,12 @@ const differentiators = [
 ]
 
 const quickLabs = [
-  { id: 'not-gate',       title: 'NOT Gate',        subtitle: 'Signal Inversion',   color: '#7C3AED', time: '5 min'  },
-  { id: 'half-adder',     title: 'Half Adder',      subtitle: '1-bit Binary Adder', color: '#059669', time: '10 min' },
-  { id: 'nand-universal', title: 'NAND Universal',  subtitle: 'Universal Gate Proof',color: '#B45309', time: '8 min'  },
+  { id: 'not-gate',       title: 'NOT Gate',         subtitle: 'Signal Inversion',    color: '#7C3AED', time: '5 min'  },
+  { id: 'half-adder',     title: 'Half Adder',       subtitle: '1-bit Binary Adder',  color: '#059669', time: '10 min' },
+  { id: 'nand-universal', title: 'NAND Universal',   subtitle: 'Universal Gate Proof', color: '#B45309', time: '8 min'  },
+  { id: 'full-adder',     title: 'Full Adder',       subtitle: '3-input Adder + Cin', color: '#0E7490', time: '12 min' },
+  { id: 'sr-flipflop',    title: 'SR Flip-Flop',     subtitle: 'Memory & Latching',   color: '#7C3AED', time: '10 min' },
+  { id: 'mux-2to1',       title: '2:1 Multiplexer',  subtitle: 'Data Selector',       color: '#059669', time: '8 min'  },
 ]
 
 // ─── Floating circuit node decoration ───────────────────────────
@@ -264,7 +267,7 @@ export default function Landing() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {quickLabs.map((lab, i) => (
               <motion.div
                 key={lab.id}
